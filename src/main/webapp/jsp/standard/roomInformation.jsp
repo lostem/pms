@@ -8,31 +8,32 @@
 
 <ax:layout name="base">
     <jsp:attribute name="script">
+        <ax:script-lang key="ax.script" var="LANG" />
+        <ax:script-lang key="ax.base" var="COL" />
         <script type="text/javascript" src="<c:url value='/assets/js/view/standard/roomInformation.js' />"></script>
     </jsp:attribute>
     <jsp:body>
 
         <ax:page-buttons></ax:page-buttons>
+    
 
 
         <div role="page-header">
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
-                        <ax:td label='검색조건' width="300px">
-                            <input type="text" class="form-control" />
-                        </ax:td>
-                        <ax:td label='검색조건 1' width="300px">
-                            <input type="text" class="form-control" />
-                        </ax:td>
-                        <ax:td label='검색조건 2' width="300px">
-                            <input type="text" class="form-control" />
+                        <ax:td label='객실타입' width="200px">
+                            <select name="roomType" data-ax-path="roomType" class="form-control">
+                                <option value="SB">SB</option>
+                                <option value="DB">DB</option>
+                                <option value="DT">DT</option>
+                            </select>
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>
             </ax:form>
             <div class="H10"></div>
-        </div>
+        </div> 
 
         <ax:split-layout name="ax1" orientation="horizontal">
             <ax:split-panel width="*" style="">
@@ -41,7 +42,7 @@
                 <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                     <div class="left">
                         <h2><i class="cqc-list"></i>
-                            프로그램 목록 </h2>
+                            객실목록 </h2>
                     </div>
                     <div class="right">
                         <button type="button" class="btn btn-default" data-grid-view-01-btn="add"><i class="cqc-circle-with-plus"></i> 추가</button>
