@@ -30,7 +30,7 @@ public class BaseService<T, ID extends Serializable> extends AXBootBaseService<T
 
     protected QEducationTeach qEducationTeach = QEducationTeach.educationTeach;
     protected QEducationBook qEducationBook = QEducationBook.educationBook;
-    protected QStandardRoom qstandardRoom = QStandardRoom.standardRoom;
+    protected QStandardRoom qStandardRoom = QStandardRoom.standardRoom;
 
     protected AXBootJPAQueryDSLRepository<T, ID> repository;
 

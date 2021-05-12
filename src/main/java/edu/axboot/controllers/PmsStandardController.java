@@ -6,7 +6,10 @@ import com.chequer.axboot.core.controllers.BaseController;
 import edu.axboot.domain.standard.StandardRoom;
 import edu.axboot.domain.standard.StandardRoomService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -21,20 +24,14 @@ public class PmsStandardController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET, produces = APPLICATION_JSON)
     public Responses.ListResponse getList(@RequestParam(value = "roomTypCd", required = false) String roomTypCd) {
-        List<StandardRoom> list = standardRoomService.standardgetList(roomTypCd);
+        List<StandardRoom> list = standardRoomService.roomList(roomTypCd);
         return Responses.ListResponse.of(list);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, produces = APPLICATION_JSON)
-    public ApiResponse save(@RequestBody StandardRoom request) {
-        standardRoomService.standardSave(request);
+    @RequestMapping(value = "save", method = RequestMethod.PUT, produces = APPLICATION_JSON)
+    public ApiResponse save(@RequestBody List<StandardRoom> request) {
+        standardRoomService.roomSave(request);
         return ok();
     }
 
-    @RequestMapping( method = RequestMethod.DELETE, produces = APPLICATION_JSON)
-    public ApiResponse delete(@RequestParam List<Long> ids) {
-        standardRoomService.standardDelete(ids);
-
-        return ok();
-    }
 }
