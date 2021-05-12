@@ -52,8 +52,6 @@ public class StandardRoomService extends BaseService<StandardRoom, Long> {
         }
         return result;
     }
-
-
-    }
+}
 
 

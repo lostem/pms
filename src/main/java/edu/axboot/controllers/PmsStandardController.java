@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping(value = "api/v1/standard/room")
+@RequestMapping(value = "/api/v1/standard/room")
 public class PmsStandardController extends BaseController {
 
     @Inject
@@ -28,7 +28,7 @@ public class PmsStandardController extends BaseController {
         return Responses.ListResponse.of(list);
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.PUT, produces = APPLICATION_JSON)
+    @RequestMapping(value = "/save", method = RequestMethod.PUT, produces = APPLICATION_JSON)
     public ApiResponse save(@RequestBody List<StandardRoom> request) {
         standardRoomService.roomSave(request);
         return ok();
