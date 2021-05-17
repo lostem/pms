@@ -8,28 +8,25 @@
 
 <ax:layout name="base">
     <jsp:attribute name="script">
-        <ax:script-lang key="ax.script" var="LANG" />
-        <ax:script-lang key="ax.base" var="COL" />
         <script type="text/javascript" src="<c:url value='/assets/js/view/standard/roomInformation.js' />"></script>
     </jsp:attribute>
     <jsp:body>
 
         <ax:page-buttons></ax:page-buttons>
-    
 
 
         <div role="page-header">
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
-                        <ax:td label='객실타입' width="200px">
-                            <ax:common-code groupCd="ROOM_TYPE" clazz="js-roomTypCd" emptyText="선택" />
+                        <ax:td label='객실 타입' width="300px">
+                            <ax:common-code groupCd="ROOM_TYPE" id="roomType" clazz="js-roomType" emptyText="전체" />
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>
             </ax:form>
             <div class="H10"></div>
-        </div> 
+        </div>
 
         <ax:split-layout name="ax1" orientation="horizontal">
             <ax:split-panel width="*" style="">
@@ -37,11 +34,12 @@
                 <!-- 목록 -->
                 <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                     <div class="left">
-                        <h2><i class="cqc-list"></i> 객실목록 </h2>
+                        <h2><i class="cqc-list"></i>
+                            객실 목록 </h2>
                     </div>
                     <div class="right">
                         <button type="button" class="btn btn-default" data-grid-view-01-btn="add"><i class="cqc-circle-with-plus"></i> 추가</button>
-                        <button type="button" class="btn btn-default" data-grid-view-01-btn="delete"><i class="cqc-circle-with-minus"></i> 삭제</button>
+                        <button type="button" class="btn btn-default" data-grid-view-01-btn="delete"><i class="cqc-circle-with-plus"></i> 삭제</button>
                     </div>
                 </div>
                 <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 300px;"></div>

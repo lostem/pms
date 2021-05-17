@@ -5,6 +5,8 @@ import com.chequer.axboot.core.api.response.Responses;
 import com.chequer.axboot.core.controllers.BaseController;
 import edu.axboot.domain.standard.StandardRoom;
 import edu.axboot.domain.standard.StandardRoomService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/api/v1/standard/room")
 public class PmsStandardController extends BaseController {
+    private static final Logger logger = LoggerFactory.getLogger(PmsStandardController.class);
 
     @Inject
     private StandardRoomService standardRoomService;
@@ -28,9 +31,9 @@ public class PmsStandardController extends BaseController {
         return Responses.ListResponse.of(list);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.PUT, produces = APPLICATION_JSON)
+    @RequestMapping(method = {RequestMethod.POST}, produces = APPLICATION_JSON)
     public ApiResponse save(@RequestBody List<StandardRoom> request) {
-        standardRoomService.roomSave(request);
+        standardRoomService.save(request);
         return ok();
     }
 

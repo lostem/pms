@@ -20,19 +20,14 @@
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
-                        <ax:td label='이름' width="350px">
-                            <input type="text" class="form-control" />
+                        <ax:td label='이름' width="400px">
+                            <input type="text" name="name" class="js-name form-control" />
                         </ax:td>
-                        <ax:td label='전화번호' width="350px">
-                            <input type="text" class="form-control" />
+                        <ax:td label='전화번호' width="400px">
+                            <input type="text" name="phone" class="js-phone form-control" />
                         </ax:td>
-                        <ax:td label='이메일' width="490px">
-                            <input type="text" class="form-control" />
-                        </ax:td>
-                    </ax:tr>
-                    <ax:tr>
-                        <ax:td>
-                            
+                        <ax:td label='이메일' width="550px">
+                            <input type="text" name="email" class="js-email form-control" />
                         </ax:td>
                     </ax:tr>
                 </ax:tbl>
