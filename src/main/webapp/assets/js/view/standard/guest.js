@@ -55,6 +55,7 @@ fnObj.pageStart = function () {
     this.pageButtonView.initView();
     this.searchView.initView();
     this.gridView01.initView();
+    this.formView01.initView();
 
     ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
 };
@@ -75,6 +76,27 @@ fnObj.pageButtonView = axboot.viewExtend({
     },
 });
 
+var myCalendar = new ax5.ui.calendar({
+    control: {
+        left: '<i class="cqc-chevron-left"></i>',
+        yearTmpl: '%s',
+        monthTmpl: '%s',
+        right: '<i class="cqc-chevron-right"></i>',
+        yearFirst: true,
+    },
+    target: document.getElementById('calendar-target'),
+    displayDate: new Date(),
+    onClick: function () {
+        //console.log(this);
+        //console.log(myCalendar.getSelection());
+    },
+    onStateChanged: function () {
+        //console.log(this);
+    },
+});
+
+myCalendar.setSelection([new Date()]);
+
 //== view 시작
 /**
  * searchView
@@ -82,8 +104,16 @@ fnObj.pageButtonView = axboot.viewExtend({
 fnObj.searchView = axboot.viewExtend(axboot.searchView, {
     initView: function () {
         this.target = $(document['searchView0']);
+        this.target = $(document['form']);
         this.target.attr('onsubmit', 'return ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);');
         this.filter = $('#filter');
+
+        this.target.find('[data-ax5picker="date"]').ax5picker({
+            direction: 'auto',
+            content: {
+                type: 'date',
+            },
+        });
     },
     getData: function () {
         return {
@@ -145,5 +175,51 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     },
     addRow: function () {
         this.target.addRow({ __created__: true }, 'last');
+    },
+});
+
+/**
+ * formView01
+ */
+fnObj.formView01 = axboot.viewExtend(axboot.formView, {
+    getDefaultData: function () {
+        return $.extend({}, axboot.formView.defaultData, {});
+    },
+    initView: function () {
+        this.target = $('#formView01');
+        this.model = new ax5.ui.binder();
+        this.model.setModel(this.getDefaultData(), this.target);
+        this.modelFormatter = new axboot.modelFormatter(this.model); // 모델 포메터 시작
+        this.initEvent();
+
+        axboot.buttonClick(this, 'data-form-view-01-btn', {
+            'form-clear': function () {
+                ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
+            },
+        });
+    },
+    initEvent: function () {
+        var _this = this;
+
+        var myCalendar = new ax5.ui.calendar({
+            control: {
+                left: '<i class="cqc-chevron-left"></i>',
+                yearTmpl: '%s',
+                monthTmpl: '%s',
+                right: '<i class="cqc-chevron-right"></i>',
+                yearFirst: true,
+            },
+            target: document.getElementById('calendar-target'),
+            displayDate: new Date(),
+            onClick: function () {
+                //console.log(this);
+                //console.log(myCalendar.getSelection());
+            },
+            // onStateChanged: function () {
+            //     //console.log(this);
+            // },
+        });
+
+        myCalendar.setSelection([new Date()]);
     },
 });
