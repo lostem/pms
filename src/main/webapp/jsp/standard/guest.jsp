@@ -21,10 +21,10 @@
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
                         <ax:td label='이름' width="400px">
-                            <input type="text" name="name" class="js-name form-control" />
+                            <input type="text" name="guestNm" class="js-guestNm form-control" />
                         </ax:td>
                         <ax:td label='전화번호' width="400px">
-                            <input type="text" name="phone" class="js-phone form-control" />
+                            <input type="text" name="guestTel" class="js-guestTel form-control" data-ax5formatter="phone" />
                         </ax:td>
                         <ax:td label='이메일' width="550px">
                             <input type="text" name="email" class="js-email form-control" />
@@ -102,14 +102,14 @@
                                 </ax:td>
                             </ax:tr>
 
-                            <div class="ax-button-group" data-fit-height-aside="grid-view-01" >
+                            <div class="ax-button-group" data-fit-height-aside="grid-view-02" >
                                 <div class="left">
                                     <h2><i class="cqc-list"></i> 투숙 이력</h2>
                                 </div>
                                 <div class="right">
                                 </div>
                             </div>
-                            <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 50px;"></div>
+                            <div data-ax5grid="grid-view-02" style="height: 300px;"></div>
 
                         </ax:tbl>
                     </form>
@@ -120,3 +120,4 @@
 
     </jsp:body>
 </ax:layout>
+

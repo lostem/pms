@@ -16,7 +16,7 @@ import javax.persistence.*;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "PMS_GUEST")
-public class Guest extends BaseJpaModel<Long> {
+public class StandardGuest extends BaseJpaModel<Long> {
 
     @Id
     @Column(name = "ID", precision = 19, nullable = false)
@@ -34,7 +34,7 @@ public class Guest extends BaseJpaModel<Long> {
 
     @Column(name = "GUEST_TEL", length = 18)
     @Comment(value = "투숙객 전화")
-    private String gusetTel;
+    private String guestTel;
 
     @Column(name = "EMAIL", length = 100)
     @Comment(value = "이메일")
