@@ -56,7 +56,6 @@ public class StandardGuest extends BaseJpaModel<Long> {
     @Comment(value = "비고")
     private String rmk;
 
-
     @Override
     public Long getId() {
         return id;

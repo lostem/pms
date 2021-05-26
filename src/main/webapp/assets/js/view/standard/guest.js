@@ -34,12 +34,24 @@ var ACTIONS = axboot.actionExtend(fnObj, {
             });
         }
     },
-    ITEM_CLICK: function (caller, act, data) {},
-    ITEM_ADD: function (caller, act, data) {
-        caller.gridView01.addRow();
+    ITEM_CLICK: function (caller, act, data) {
+        var id = data.id;
+
+        axboot.ajax({
+            type: 'GET',
+            url: '/api/v1/standard/guest' + id,
+            callback: function (res) {
+                caller.formView01.setData(res);
+                caller.gridView02.clear();
+                caller.gridView02.setData(res.chkList);
+            },
+        });
     },
-    ITEM_DEL: function (caller, act, data) {
-        caller.gridView01.delRow('selected');
+    EXCEL_DOWN: function (caller, act, data) {
+        var frm = $('.js-form').get(0);
+        frm.action = '/api/v1/standard/guest/exceldown';
+        frm.enctype = 'application/x-www-form-urlencoded';
+        frm.submit();
     },
     dispatch: function (caller, act, data) {
         var result = ACTIONS.exec(caller, act, data);
@@ -79,49 +91,16 @@ fnObj.pageButtonView = axboot.viewExtend({
     },
 });
 
-var myCalendar = new ax5.ui.calendar({
-    control: {
-        left: '<i class="cqc-chevron-left"></i>',
-        yearTmpl: '%s',
-        monthTmpl: '%s',
-        right: '<i class="cqc-chevron-right"></i>',
-        yearFirst: true,
-    },
-    target: document.getElementById('calendar-target'),
-    displayDate: new Date(),
-    onClick: function () {
-        //console.log(this);
-        //console.log(myCalendar.getSelection());
-    },
-    onStateChanged: function () {
-        //console.log(this);
-    },
-});
-
-myCalendar.setSelection([new Date()]);
-
 //== view 시작
 /**
  * searchView
  */
+
 fnObj.searchView = axboot.viewExtend(axboot.searchView, {
     initView: function () {
+        var _this = this;
         this.target = $(document['searchView0']);
-        this.target = $(document['form']);
         this.target.attr('onsubmit', 'return ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);');
-        this.target.on('keydown.search', 'input, .form-control', function (e) {
-            if (e.keyCode === 13) {
-                ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);
-            }
-        });
-
-        this.target.find('[data-ax5picker="date"]').ax5picker({
-            direction: 'auto',
-            content: {
-                type: 'date',
-            },
-        });
-
         this.guestNm = $('.js-guestNm');
         this.guestTel = $('.js-guestTel');
         this.email = $('.js-email');
@@ -191,6 +170,54 @@ fnObj.gridView01 = axboot.viewExtend(axboot.gridView, {
     },
 });
 
+fnObj.formView01 = axboot.viewExtend(axboot.formView, {
+    getDefaultData: function () {
+        return {};
+    },
+    getData: function () {
+        var data = this.modelFormatter.getClearData(this.model.get()); // 모델의 값을 포멧팅 전 값으로 치환.
+        return $.extend({}, data);
+    },
+    setData: function (data) {
+        if (typeof data === 'undefined') data = this.getDefaultData();
+        data = $.extend({}, data);
+
+        this.model.setModel(data);
+        this.modelFormatter.formatting(); // 입력된 값을 포메팅 된 값으로 변경
+    },
+    validate: function () {
+        var item = this.model.get();
+
+        var rs = this.model.validate();
+
+        if (rs.error) {
+            alert(rs.error[0].jquery.attr('title') + '을(를) 입력해주세요.');
+            rs.error[0].jquery.focus();
+            return false;
+        }
+
+        return true;
+    },
+    initEvent: function () {
+        axboot.buttonClick(this, 'data-form-view-01-btn', {
+            'form-clear': function () {
+                ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
+            },
+        });
+    },
+    initView: function () {
+        var _this = this; // fnObj.formView01
+
+        _this.target = $('.js-form');
+
+        this.model = new ax5.ui.binder();
+        this.model.setModel(this.getDefaultData(), this.target);
+        this.modelFormatter = new axboot.modelFormatter(this.model); // 모델 포메터 시작
+
+        this.initEvent();
+    },
+});
+
 /**
  * gridView02
  */
@@ -199,97 +226,30 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         var _this = this;
 
         this.target = axboot.gridBuilder({
-            showLineNumber: false,
             showRowSelector: true,
+            frozenColumnIndex: 0,
             multipleSelect: true,
             target: $('[data-ax5grid="grid-view-02"]'),
             columns: [
-                { key: 'key', label: '투숙일', width: 190, align: 'center', editor: 'text' },
-                { key: 'nightCnt', label: '숙박수', width: 130, align: 'center', editor: 'text' },
-                { key: 'roomNum', label: '객실번호', width: 130, align: 'center', editor: 'text' },
-                { key: 'roomTypCd', label: '객실타입', width: 130, align: 'center', editor: 'text' },
-                { key: 'rsvNum', label: '투숙번호', width: 240, align: 'center', editor: 'text' },
+                {
+                    key: 'rsvDt',
+                    label: '투숙일',
+                    width: 200,
+                    align: 'center',
+                    formatter: function () {
+                        return moment(this.item.arrDt).format('YY.M.D') + '-' + moment(this.item.depDt).format('YY.M.D');
+                    },
+                },
+                { key: 'nightCnt', label: '숙박수', width: 100, align: 'center' },
+                { key: 'roomNum', label: '객실번호', width: 110, align: 'center' },
+                { key: 'roomTypCd', label: '객실타입', width: 110, align: 'center' },
+                { key: 'rsvNum', label: '투숙번호', width: 250, align: 'center' },
             ],
             body: {
                 onClick: function () {
-                    //this.self.select(this.dindex);
-                    //ACTIONS.dispatch(ACTIONS.ITEM_CLICK, this.list[this.dindex]);
+                    this.self.select(this.dindex, { selectedClear: true });
                 },
             },
         });
-
-        axboot.buttonClick(this, 'data-grid-view-02-btn', {
-            'item-add': function () {
-                this.addRow();
-            },
-            'item-remove': function () {
-                this.delRow();
-            },
-        });
-    },
-    setData: function (_data) {
-        this.target.setData(_data);
-    },
-    getData: function (_type) {
-        var list = [];
-        var _list = this.target.getList(_type);
-
-        if (_type == 'modified' || _type == 'deleted') {
-            list = ax5.util.filter(_list, function () {
-                return this.key;
-            });
-        } else {
-            list = _list;
-        }
-        return list;
-    },
-    align: function () {
-        this.target.align();
-    },
-});
-
-/**
- * formView01
- */
-fnObj.formView01 = axboot.viewExtend(axboot.formView, {
-    getDefaultData: function () {
-        return $.extend({}, axboot.formView.defaultData, {});
-    },
-    initView: function () {
-        this.target = $('#formView01');
-        this.model = new ax5.ui.binder();
-        this.model.setModel(this.getDefaultData(), this.target);
-        this.modelFormatter = new axboot.modelFormatter(this.model); // 모델 포메터 시작
-        this.initEvent();
-
-        axboot.buttonClick(this, 'data-form-view-01-btn', {
-            'form-clear': function () {
-                ACTIONS.dispatch(ACTIONS.FORM_CLEAR);
-            },
-        });
-    },
-    initEvent: function () {
-        var _this = this;
-
-        var myCalendar = new ax5.ui.calendar({
-            control: {
-                left: '<i class="cqc-chevron-left"></i>',
-                yearTmpl: '%s',
-                monthTmpl: '%s',
-                right: '<i class="cqc-chevron-right"></i>',
-                yearFirst: true,
-            },
-            target: document.getElementById('calendar-target'),
-            displayDate: new Date(),
-            onClick: function () {
-                //console.log(this);
-                //console.log(myCalendar.getSelection());
-            },
-            // onStateChanged: function () {
-            //     //console.log(this);
-            // },
-        });
-
-        myCalendar.setSelection([new Date()]);
     },
 });

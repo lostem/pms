@@ -61,12 +61,12 @@
                         </div>
                     </div>
 
-                    <form name="form" class="js-form">
+                    <form name="formView01" class="js-form">
                         <ax:tbl clazz="ax-form-tbl" minWidth="500px">
 
                             <ax:tr labelWidth="120px">
                                 <ax:td label="이름" width="50%">
-                                    <input type="text" name="guestNm" data-ax-path="guestNm"  class="form-control" />
+                                    <input type="text" name="guestNm" data-ax-path="guestNm"  class="form-control" title="이름" data-ax-validate="required" />
                                 </ax:td>
                                 <ax:td label="영문" width="50%">
                                     <input type="text" name="guestNmEng" data-ax-path="guestNmEng"  class="form-control" />
@@ -83,17 +83,17 @@
                             </ax:tr>
                             <ax:tr labelWidth="120px">
                                 <ax:td label="언어" width="50%">
-                                    <ax:common-code groupCd="LANG" name="langCd"  clazz="js-roomType" emptyText="" />
+                                    <ax:common-code groupCd="LANG" name="langCd"  dataPath="langCd" clazz="js-roomType" />
                                 </ax:td>
                                 <ax:td label="생년월일" width="35%">
-                                    <div class="input-group" data-ax5picker="date" >
+                                    <div class="input-group" data-ax5picker="brth" >
                                         <input type="text" class="form-control" name="brth" data-ax-path="brth" placeholder="YYYY-MM-DD" />
                                         <span class="input-group-addon"><i class="cqc-calendar"></i></span>
                                     </div>
                                 </ax:td> 
                                 <span>
-                                    <label ><input type="radio" data-ax-path="gender" name="gender" value="man"  style="height: 40px; width: 20px;" >남 </label>
-                                    <label ><input type="radio" data-ax-path="gender" name="gender" value="famale" style="height: 40px; width: 20px;">여 </label>
+                                    <label ><input type="radio" data-ax-path="gender" name="gender" value="남자" >남 </label>
+                                    <label ><input type="radio" data-ax-path="gender" name="gender" value="여자" >여 </label>
                                 </span>
                             </ax:tr>
                             <ax:tr labelWidth="120px">

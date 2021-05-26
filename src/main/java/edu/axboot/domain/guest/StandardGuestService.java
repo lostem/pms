@@ -4,6 +4,7 @@ import com.chequer.axboot.core.parameter.RequestParams;
 import com.querydsl.core.BooleanBuilder;
 import edu.axboot.domain.BaseService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -40,21 +41,22 @@ public class StandardGuestService extends BaseService<StandardGuest, Long> {
         return list;
     }
 
-
+    @Transactional
     public void guestSave(StandardGuest request) {
         if(request.getId() == null || request.getId() == 0) {
             this.standardGuestRepository.save(request);
         } else {
             update(qGuest)
-                    .set(qGuest.guestNm, request.getGuestNm())
-                    .set(qGuest.guestNmEng,request.getGuestNmEng())
-                    .set(qGuest.guestTel, request.getGuestTel())
-                    .set(qGuest.email, request.getEmail())
-                    .set(qGuest.brth, request.getBrth())
-                    .set(qGuest.gender, request.getGender())
-                    .set(qGuest.langCd, request.getLangCd())
-                    .set(qGuest.rmk, request.getRmk())
-                    .execute();
+                .set(qGuest.guestNm, request.getGuestNm())
+                .set(qGuest.guestNmEng,request.getGuestNmEng())
+                .set(qGuest.guestTel, request.getGuestTel())
+                .set(qGuest.email, request.getEmail())
+                .set(qGuest.brth, request.getBrth())
+                .set(qGuest.gender, request.getGender())
+                .set(qGuest.langCd, request.getLangCd())
+                .set(qGuest.rmk, request.getRmk())
+                .execute();
         }
     }
+
 }
