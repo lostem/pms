@@ -21,7 +21,16 @@ public class PmsBookingChkController extends BaseController {
 
     @RequestMapping(method = RequestMethod.PUT, produces = APPLICATION_JSON)
     public ApiResponse save(@RequestBody BookingChk request) {
-        bookingChkService.bookingSave(request);
+        bookingChkService.save(request);
         return ok();
     }
+
+//    @RequestMapping(method =RequestMethod.GET, produces = APPLICATION_JSON)
+//    public Responses.ListResponse getList(RequestParams <BookingChk> requestParams) {
+//
+//        List<BookingChk> list = BookingChkService.getList(requestParams);
+//        return Responses.ListResponse.of(list);
+//
+//    }
+
 }

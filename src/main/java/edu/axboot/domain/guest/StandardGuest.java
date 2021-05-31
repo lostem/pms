@@ -2,12 +2,18 @@ package edu.axboot.domain.guest;
 
 import com.chequer.axboot.core.annotations.Comment;
 import edu.axboot.domain.BaseJpaModel;
+import edu.axboot.domain.booking.BookingChk;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Setter
@@ -15,6 +21,7 @@ import javax.persistence.*;
 @Entity
 @DynamicInsert
 @DynamicUpdate
+@NoArgsConstructor
 @Table(name = "PMS_GUEST")
 public class StandardGuest extends BaseJpaModel<Long> {
 
@@ -56,9 +63,33 @@ public class StandardGuest extends BaseJpaModel<Long> {
     @Comment(value = "비고")
     private String rmk;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @NotFound(action = NotFoundAction.IGNORE)
+    @JoinColumn(name = "GUEST_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    private List<BookingChk> chkList;
+
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Builder
+    public StandardGuest(Long id, String guestNm, String guestNmEng, String guestTel, String email, String brth, String gender, String langCd, String rmk) {
+        this.id = id;
+        this.guestNm = guestNm;
+        this.guestNmEng = guestNmEng;
+        this.guestTel = guestTel;
+        this.email = email;
+        this.brth = brth;
+        this.gender = gender;
+        this.langCd = langCd;
+        this.rmk = rmk;
+    }
+
+    public void update(String guestTel, String email, String rmk) {
+        this.guestTel = guestTel;
+        this.email = email;
+        this.rmk = rmk;
     }
 
 }

@@ -162,6 +162,10 @@
                     </argLine>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <resources>
@@ -178,5 +182,6 @@
                 <directory>src/test/resources</directory>
             </testResource>
         </testResources>
+
     </build>
 </project>

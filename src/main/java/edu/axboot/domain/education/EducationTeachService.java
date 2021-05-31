@@ -14,9 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -37,8 +34,8 @@ public class EducationTeachService extends BaseService<EducationTeach, Long> {
 
     private EducationTeachRepository educationTeachRepository;
 
-    @Inject
-    private EducationTeachMapper educationTeachMapper;
+//    @Inject
+//    private EducationTeachMapper educationTeachMapper;
 
     @Inject
     private CommonFileService commonFileService;
@@ -166,74 +163,74 @@ public class EducationTeachService extends BaseService<EducationTeach, Long> {
         }
     }
 
-    @Transactional
-    public void deleteUsingQueryDsl(List<Long> ids) {
-        for (Long id : ids) {
-            deleteUsingQueryDsl(id);
-        }
-    }
+//    @Transactional
+//    public void deleteUsingQueryDsl(List<Long> ids) {
+//        for (Long id : ids) {
+//            deleteUsingQueryDsl(id);
+//        }
+//    }
 
-    @Transactional
-    public void deleteUsingQueryDsl(Long id) {
-        delete(qEducationTeach).where(qEducationTeach.id.eq(id)).execute();
-    }
-    // [ endregion : QueryDsl 사용하는 셈플 ] ---------------------------------------
+//    @Transactional
+//    public void deleteUsingQueryDsl(Long id) {
+//        delete(qEducationTeach).where(qEducationTeach.id.eq(id)).execute();
+//    }
+//    // [ endregion : QueryDsl 사용하는 셈플 ] ---------------------------------------
+//
+//    // ---------------------------------------------------------------------------
+//    // [ region : MyBatis 사용하는 셈플 ]
+//    public Page<EducationTeach> getPageUsingMyBatis(RequestParams<EducationTeach> requestParams) {
+//        String companyNm = requestParams.getString("companyNm", "");
+//        String ceo = requestParams.getString("ceo", "");
+//        String bizno = requestParams.getString("bizno", "");
+//        String useYn = requestParams.getString("useYn", "");
+//        String filter = requestParams.getFilter();
+//
+//        if (!"".equals(useYn) && !"Y".equals(useYn) && !"N".equals(useYn)) {
+//            throw new RuntimeException("Y 아니면 N 입력하세요~");
+//        }
+//
+//        Pageable pageable = requestParams.getPageable();
+//        HashMap<String, Object> params = new HashMap<>();
+//        params.put("pageNumber", pageable.getPageNumber());
+//        params.put("pageSize", pageable.getPageSize());
+//        params.put("companyNm", companyNm);
+//        params.put("ceo", ceo);
+//        params.put("bizno", bizno);
+//        params.put("useYn", useYn);
+//        params.put("filter", filter);
+//
+//        List<EducationTeach> list = educationTeachMapper.selectPage(params);
+//        int count = educationTeachMapper.selectCount(params);
+//        Page<EducationTeach> page = new PageImpl<>(list, pageable, count);
+//        return page;
+//    }
+//
+//    public EducationTeach getOneUsingMyBatis(Long id) {
+//        return educationTeachMapper.selectOne(id);
+//    }
 
-    // ---------------------------------------------------------------------------
-    // [ region : MyBatis 사용하는 셈플 ]
-    public Page<EducationTeach> getPageUsingMyBatis(RequestParams<EducationTeach> requestParams) {
-        String companyNm = requestParams.getString("companyNm", "");
-        String ceo = requestParams.getString("ceo", "");
-        String bizno = requestParams.getString("bizno", "");
-        String useYn = requestParams.getString("useYn", "");
-        String filter = requestParams.getFilter();
+//    @Transactional
+//    public void saveUsingMyBatis(EducationTeach entity) {
+//        if (entity.getId() == null || entity.getId() == 0) {
+//            educationTeachMapper.insert(entity);
+//        } else if (entity.isDeleted()) {
+//            educationTeachMapper.delete(entity.getId());
+//        } else {
+//            educationTeachMapper.update(entity);
+//        }
+//    }
 
-        if (!"".equals(useYn) && !"Y".equals(useYn) && !"N".equals(useYn)) {
-            throw new RuntimeException("Y 아니면 N 입력하세요~");
-        }
+//    @Transactional
+//    public void deleteUsingMybatis(List<Long> ids) {
+//        for (Long id : ids) {
+//            deleteUsingMybatis(id);
+//        }
+//    }
 
-        Pageable pageable = requestParams.getPageable();
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("pageNumber", pageable.getPageNumber());
-        params.put("pageSize", pageable.getPageSize());
-        params.put("companyNm", companyNm);
-        params.put("ceo", ceo);
-        params.put("bizno", bizno);
-        params.put("useYn", useYn);
-        params.put("filter", filter);
-
-        List<EducationTeach> list = educationTeachMapper.selectPage(params);
-        int count = educationTeachMapper.selectCount(params);
-        Page<EducationTeach> page = new PageImpl<>(list, pageable, count);
-        return page;
-    }
-
-    public EducationTeach getOneUsingMyBatis(Long id) {
-        return educationTeachMapper.selectOne(id);
-    }
-
-    @Transactional
-    public void saveUsingMyBatis(EducationTeach entity) {
-        if (entity.getId() == null || entity.getId() == 0) {
-            educationTeachMapper.insert(entity);
-        } else if (entity.isDeleted()) {
-            educationTeachMapper.delete(entity.getId());
-        } else {
-            educationTeachMapper.update(entity);
-        }
-    }
-
-    @Transactional
-    public void deleteUsingMybatis(List<Long> ids) {
-        for (Long id : ids) {
-            deleteUsingMybatis(id);
-        }
-    }
-
-    @Transactional
-    public void deleteUsingMybatis(Long id) {
-        educationTeachMapper.delete(id);
-    }
+//    @Transactional
+//    public void deleteUsingMybatis(Long id) {
+//        educationTeachMapper.delete(id);
+//    }
     // [ endregion : MyBatis 사용하는 셈플 ] ---------------------------------------
 
     @Transactional

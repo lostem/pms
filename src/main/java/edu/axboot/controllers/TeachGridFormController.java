@@ -45,37 +45,37 @@ public class TeachGridFormController extends BaseController {
         return ok();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, produces = APPLICATION_JSON)
-    public ApiResponse deleteUsingQueryDsl(@RequestParam List<Long> ids) {
-        educationTeachService.deleteUsingQueryDsl(ids);
-        return ok();
-    }
+//    @RequestMapping(method = RequestMethod.DELETE, produces = APPLICATION_JSON)
+//    public ApiResponse deleteUsingQueryDsl(@RequestParam List<Long> ids) {
+//        educationTeachService.deleteUsingQueryDsl(ids);
+//        return ok();
+//    }
     // [ endregion : QueryDsl 사용하는 셈플 ] ---------------------------------------
 
     // ---------------------------------------------------------------------------
     // [ region : MyBatis 사용하는 셈플 ]
-    @RequestMapping(value = "/mybatis", method = RequestMethod.GET, produces = APPLICATION_JSON)
-    public Responses.PageResponse listUsingMyBatis(RequestParams<EducationTeach> requestParams) {
-        Page<EducationTeach> page = educationTeachService.getPageUsingMyBatis(requestParams);
-        return Responses.PageResponse.of(page);
-    }
-
-    @RequestMapping(value = "/mybatis/{id}", method = RequestMethod.GET, produces = APPLICATION_JSON)
-    public EducationTeach viewUsingMyBatis(@PathVariable Long id) {
-        EducationTeach entity = educationTeachService.getOneUsingMyBatis(id);
-        return entity;
-    }
-
-    @RequestMapping(value = "/mybatis", method = {RequestMethod.POST}, produces = APPLICATION_JSON)
-    public ApiResponse saveUsingMyBatis(@RequestBody EducationTeach request) {
-        educationTeachService.saveUsingMyBatis(request);
-        return ok();
-    }
-
-    @RequestMapping(value = "/mybatis", method = RequestMethod.DELETE, produces = APPLICATION_JSON)
-    public ApiResponse deleteeUsingMyBatis(@RequestParam List<Long> ids) {
-        educationTeachService.deleteUsingMybatis(ids);
-        return ok();
-    }
+//    @RequestMapping(value = "/mybatis", method = RequestMethod.GET, produces = APPLICATION_JSON)
+//    public Responses.PageResponse listUsingMyBatis(RequestParams<EducationTeach> requestParams) {
+//        Page<EducationTeach> page = educationTeachService.getPageUsingMyBatis(requestParams);
+//        return Responses.PageResponse.of(page);
+//    }
+//
+//    @RequestMapping(value = "/mybatis/{id}", method = RequestMethod.GET, produces = APPLICATION_JSON)
+//    public EducationTeach viewUsingMyBatis(@PathVariable Long id) {
+//        EducationTeach entity = educationTeachService.getOneUsingMyBatis(id);
+//        return entity;
+//    }
+//
+//    @RequestMapping(value = "/mybatis", method = {RequestMethod.POST}, produces = APPLICATION_JSON)
+//    public ApiResponse saveUsingMyBatis(@RequestBody EducationTeach request) {
+//        educationTeachService.saveUsingMyBatis(request);
+//        return ok();
+//    }
+//
+//    @RequestMapping(value = "/mybatis", method = RequestMethod.DELETE, produces = APPLICATION_JSON)
+//    public ApiResponse deleteeUsingMyBatis(@RequestParam List<Long> ids) {
+//        educationTeachService.deleteUsingMybatis(ids);
+//        return ok();
+//    }
     // [ endregion : MyBatis 사용하는 셈플 ] ---------------------------------------
 }

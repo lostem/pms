@@ -1,12 +1,12 @@
 package edu.axboot.domain.education;
 
-import com.chequer.axboot.core.mybatis.MyBatisMapper;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public interface EducationTeachMapper extends MyBatisMapper {
+//public interface EducationTeachMapper extends MyBatisMapper {
+    public interface EducationTeachMapper {
+
     List<EducationTeach> selectList(HashMap<String, Object> params);
     EducationTeach selectOne(Long id);
     List<EducationTeach> selectPage(Map<String, Object> map);

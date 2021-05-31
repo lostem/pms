@@ -23,19 +23,19 @@ public class StandardGuestService extends BaseService<StandardGuest, Long> {
         BooleanBuilder builder = new BooleanBuilder();
 
         if(isNotEmpty(guestNm)) {
-            builder.and(qGuest.guestNm.contains(guestNm));
+            builder.and(qStandardGuest.guestNm.contains(guestNm));
         }
         if(isNotEmpty(guestTel)) {
-            builder.and(qGuest.guestTel.contains(guestTel));
+            builder.and(qStandardGuest.guestTel.contains(guestTel));
         }
         if(isNotEmpty(email)) {
-            builder.and(qGuest.email.contains(email));
+            builder.and(qStandardGuest.email.contains(email));
         }
 
         List<StandardGuest> list = select()
-                .from(qGuest)
+                .from(qStandardGuest)
                 .where(builder)
-                .orderBy(qGuest.guestNm.asc())
+                .orderBy(qStandardGuest.guestNm.asc())
                 .fetch();
 
         return list;
@@ -46,15 +46,15 @@ public class StandardGuestService extends BaseService<StandardGuest, Long> {
         if(request.getId() == null || request.getId() == 0) {
             this.standardGuestRepository.save(request);
         } else {
-            update(qGuest)
-                .set(qGuest.guestNm, request.getGuestNm())
-                .set(qGuest.guestNmEng,request.getGuestNmEng())
-                .set(qGuest.guestTel, request.getGuestTel())
-                .set(qGuest.email, request.getEmail())
-                .set(qGuest.brth, request.getBrth())
-                .set(qGuest.gender, request.getGender())
-                .set(qGuest.langCd, request.getLangCd())
-                .set(qGuest.rmk, request.getRmk())
+            update(qStandardGuest)
+                .set(qStandardGuest.guestNm, request.getGuestNm())
+                .set(qStandardGuest.guestNmEng,request.getGuestNmEng())
+                .set(qStandardGuest.guestTel, request.getGuestTel())
+                .set(qStandardGuest.email, request.getEmail())
+                .set(qStandardGuest.brth, request.getBrth())
+                .set(qStandardGuest.gender, request.getGender())
+                .set(qStandardGuest.langCd, request.getLangCd())
+                .set(qStandardGuest.rmk, request.getRmk())
                 .execute();
         }
     }

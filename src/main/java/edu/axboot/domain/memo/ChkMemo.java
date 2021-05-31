@@ -2,20 +2,17 @@ package edu.axboot.domain.memo;
 
 import com.chequer.axboot.core.annotations.Comment;
 import edu.axboot.domain.BaseJpaModel;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 
-@Setter
 @Getter
+@NoArgsConstructor
 @Entity
-@DynamicInsert
-@DynamicUpdate
 @Table(name = "PMS_CHK_MEMO")
 public class ChkMemo extends BaseJpaModel<Long> {
 
@@ -53,4 +50,27 @@ public class ChkMemo extends BaseJpaModel<Long> {
     public Long getId() {
         return id;
     }
+
+    @Builder
+    public ChkMemo(Long id, String rsvNum, int sno, String memoCn, Timestamp memoDtti, String memoMan, String delYn, boolean isCreated, boolean isModified, boolean isDeleted) {
+        this.id = id;
+        this.rsvNum = rsvNum;
+        this.sno = sno;
+        this.memoCn = memoCn;
+        this.memoDtti = memoDtti;
+        this.delYn = delYn;
+        this.memoMan = memoMan;
+        this.__created__ = isCreated;
+        this.__modified__ = isModified;
+        this.__deleted__ = isDeleted;
+    }
+
+    public void update(String memoCn) {
+        this.memoCn = memoCn;
+    }
+
+    public void delete() {
+        this.delYn = "Y";
+    }
 }
+
